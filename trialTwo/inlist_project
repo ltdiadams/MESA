@@ -1,0 +1,136 @@
+
+! inlist_rotation
+
+
+&star_job
+
+!!    BASIC MODEL PARAMETERS -- I/O
+!------------------------------------------------------------!
+
+      !create_pre_main_sequence_model = .true.
+      show_log_description_at_start = .false.
+
+      save_model_when_terminate = .true.
+      save_model_filename = '15Msun_1Zsun_0rot_basicnet_precc_sr1_tr1dm4.mod'
+
+      write_profile_when_terminate = .true.
+      filename_for_profile_when_terminate = '15Msun_1Zsun_0rot_basicnet_precc_sr1_tr1dm4.data'
+
+!!    NUCLEAR REACTION NETWORK
+!------------------------------------------------------------!
+
+      change_initial_net = .true.
+      new_net_name = 'approx21.net'
+
+      eos_file_prefix = 'mesa'
+      kappa_file_prefix = 'gs98'
+
+
+!!    STELLAR ROTATION PARAMETERS
+!------------------------------------------------------------!
+
+      change_v_flag = .true.
+      new_v_flag = .true.
+      !new_v_flag = .false.
+
+      change_rotation_flag = .false.
+      !change_rotation_flag = .true.
+      new_rotation_flag = .false.
+      !new_rotation_flag = .true.
+
+      !!set_initial_omega_div_omega_crit = .true. ! only applies at start of run, not for restarts.
+      !!new_omega_div_omega_crit = 0.5 ! omega as fraction of current omega_crit at surface
+
+      !set_initial_surface_rotation_v = .true.
+      set_surface_rotation_v = .true.
+      !set_surface_rotation_v = .false.
+      new_surface_rotation_v = 200 ! km/sec    200 for massive
+
+      pgstar_flag = .true.
+      pause_before_terminate = .true.
+
+/ ! end of star_job namelist
+
+
+&controls
+
+!!	 BASIC STELLAR PROPERTIES - MASS AND METALLICITY
+!------------------------------------------------------------!
+
+         initial_mass = 15.
+         initial_z = 0.02d0
+         x_ctrl(1) = 0 ! Surface Magnetic Field (Gauss)
+
+!!	 MAGNETIC PROPERTIES
+!------------------------------------------------------------!
+
+         !set ST factors to 0 for non-magnetic
+	  !am_nu_factor = 1
+          D_ST_factor = 1 ! effects of magnetic field on chemical mixing
+          am_nu_ST_factor = 1 ! effects of magnetic field on angular momentum transport
+	  !am_D_mix_factor =  0.03333333333333333d0
+	  !am_gradmu_factor = 0.05d0
+
+	  !D_DSI_factor = 1
+	  !D_SH_factor  = 1
+	  !D_SSI_factor = 1
+	  !D_ES_factor  = 1
+	  !D_GSF_factor = 1
+
+!!	 MASS LOSS PARAMETERS
+!------------------------------------------------------------!
+
+  ! mass-loss
+
+   	 hot_wind_scheme = 'Dutch'
+	 hot_wind_full_on_T = 1d0
+   	 cool_wind_full_on_T = 0d0
+   	 Dutch_scaling_factor = 0.8
+
+
+!!	 GRID REFINEMENT FOR CONVERGENCE
+!------------------------------------------------------------!
+
+	 mesh_delta_coeff = 1.0
+	 varcontrol_target = 1d-4
+
+	 max_allowed_nz = 100000
+
+         log_center_density_limit = 12
+         log_center_temp_limit = 10.3d0 ! max T about 2d10
+
+         xa_central_upper_limit_species(1) = 'si28' ! isotope name as defined in chem_def
+         xa_central_upper_limit(1) = 0.001
+
+!!	 OUTPUT DATA PARAMETERS
+!------------------------------------------------------------!
+
+         log_directory = 'LOGS'
+         photo_directory = 'photos'
+         photo_interval = 10
+         profile_interval = 1
+	 history_interval = 2
+         write_header_frequency = 3
+	 max_num_profile_models = 300
+
+         max_model_number = 100000
+
+!!	 MIXING AND CONVECTION PARAMETERS
+!------------------------------------------------------------!
+
+	 use_Ledoux_criterion = .true.
+
+
+!!	 MESH PROPERTIES AND OTHER MISCELLANEOUS PARAMETERS
+!------------------------------------------------------------!
+
+         min_timestep_limit = 1d-15 ! (seconds)
+
+
+
+/ ! end of controls namelist
+
+&pgstar
+
+
+/ ! end of pgstar namelist
