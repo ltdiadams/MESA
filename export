@@ -1,0 +1,4 @@
+export MESA_DIR=~/Desktop/mesa-r11701
+export OMP_NUM_THREADS=8
+export MESASDK_ROOT=/Applications/mesasdk
+source $MESASDK_ROOT/bin/mesasdk_init.sh
