@@ -1,0 +1,230 @@
+&pgstar
+
+  ! MESA uses PGPLOT for live plotting and gives the user a tremendous
+  ! amount of control of the presentation of the information.
+
+  ! show HR diagram
+  ! this plots the history of L,Teff over many timesteps
+    HR_win_flag = .true.
+
+  ! set static plot bounds
+    HR_logT_min = 3.0
+    HR_logT_max = 5.0
+    HR_logL_min = -2.0
+    HR_logL_max = 6.0
+
+  ! set window size (aspect_ratio = height/width)
+    HR_win_width = 8
+    HR_win_aspect_ratio = 1.0
+
+
+  ! show temperature/density profile
+  ! this plots the internal structure at single timestep
+    TRho_Profile_win_flag = .true.
+
+  ! add legend explaining colors
+    show_TRho_Profile_legend = .true.
+
+  ! display numerical info about the star
+    show_TRho_Profile_text_info = .true.
+
+  ! set window size (aspect_ratio = height/width)
+    TRho_Profile_win_width = 8
+    TRho_Profile_win_aspect_ratio = 1.0
+
+!-----------------------------------------------------------------------
+
+   !# Abundance window
+      ! current model abundance profiles
+
+         Abundance_win_flag = .true.
+
+         Abundance_win_width = 8
+         Abundance_win_aspect_ratio = 1.0 ! aspect_ratio = height/width
+
+         Abundance_xleft = 0.15
+         Abundance_xright = 0.85
+         Abundance_ybot = 0.15
+         Abundance_ytop = 0.85
+         Abundance_txt_scale = 1.0
+         Abundance_title = 'Abundance'
+
+         Abundance_num_isos_to_show = -1
+         Abundance_which_isos_to_show(1) = 'h1'
+         Abundance_which_isos_to_show(2) = 'he3'
+         Abundance_which_isos_to_show(3) = 'he4'
+         Abundance_which_isos_to_show(4) = 'c12'
+         Abundance_which_isos_to_show(5) = 'n14'
+         Abundance_which_isos_to_show(6) = 'o16'
+
+         num_abundance_line_labels = 5
+         Abundance_line_txt_scale_factor = 0.8 ! relative to other text
+
+         Abundance_legend_max_cnt = 16
+         Abundance_legend_txt_scale_factor = 0.8 ! relative to other text
+
+         Abundance_xaxis_name = 'mass'
+         Abundance_xaxis_reversed = .false.
+
+         ! power xaxis limits -- to override system default selections
+         Abundance_xmin = -101 ! only used if /= -101d0
+         Abundance_xmax = -101 ! only used if /= -101d0
+
+         ! abundance yaxis limits -- to override system default selections
+         Abundance_log_mass_frac_min = 101 ! only used if < 0
+         Abundance_log_mass_frac_max = 0.3
+
+         Abundance_show_photosphere_location = .false.
+
+         ! Enables calling a subroutine to add extra information to a plot
+         ! see `$MESA_DIR/star/other/pgstar_decorator.f90`
+         Abundance_use_decorator = .false.
+
+         ! file output
+         Abundance_file_flag = .false.
+         Abundance_file_dir = 'png'
+         Abundance_file_prefix = 'abund_'
+         Abundance_file_interval = 5 ! output when `mod(model_number,Abundance_file_interval)==0`
+         Abundance_file_width = -1 ! (inches) negative means use same value as for window
+         Abundance_file_aspect_ratio = -1 ! negative means use same value as for window
+
+         !-----------------------------------------------------------------------
+
+    !# Dynamo window
+       ! current model dynamo info
+
+          Dynamo_win_flag = .false.
+
+          Dynamo_win_width = 8
+          Dynamo_win_aspect_ratio = 1.0 ! aspect_ratio = height/width
+
+          Dynamo_xleft = 0.15
+          Dynamo_xright = 0.85
+          Dynamo_ybot = 0.15
+          Dynamo_ytop = 0.85
+          Dynamo_txt_scale = 1.0
+          Dynamo_title = 'Dynamo'
+
+          Dynamo_legend_txt_scale_factor = 0.7 ! relative to other text
+
+          show_Dynamo_annotation1 = .false.
+          show_Dynamo_annotation2 = .false.
+          show_Dynamo_annotation3 = .false.
+
+          Dynamo_xaxis_name = 'mass'
+          Dynamo_xmin = -101d0 ! only used if /= -101d0
+          Dynamo_xmax = -101d0 ! only used if /= -101d0
+          Dynamo_xaxis_reversed = .false.
+
+          Dynamo_ymin_left = -101 ! only used if /= -101d0
+          Dynamo_ymax_left = -101 ! only used if /= -101d0
+          Dynamo_dymin_left = -101 ! only used if /= -101d0
+
+          Dynamo_ymin_right = -101 ! only used if /= -101d0
+          Dynamo_ymax_right = -101 ! only used if /= -101d0
+          Dynamo_dymin_right = -101 ! only used if /= -101d0
+
+          ! Enables calling a subroutine to add extra information to a plot
+          ! see `$MESA_DIR/star/other/pgstar_decorator.f90`
+          Dynamo_use_decorator = .false.
+
+          ! file output
+          Dynamo_file_flag = .false.
+          Dynamo_file_dir = 'png'
+          Dynamo_file_prefix = 'dynamo_'
+          Dynamo_file_interval = 5 ! output when `mod(model_number,Dynamo_file_interval)==0`
+          Dynamo_file_width = -1 ! (inches) negative means use same value as for window
+          Dynamo_file_aspect_ratio = -1 ! negative means use same value as for window
+
+!-----------------------------------------------------------------------
+! "Kippenhahn" Window
+
+          Kipp_win_flag = .true.
+
+          Kipp_win_width = 8
+          Kipp_win_aspect_ratio = 1.0 ! aspect_ratio = height/width
+
+          Kipp_xleft = 0.15
+          Kipp_xright = 0.85
+          Kipp_ybot = 0.15
+          Kipp_ytop = 0.85
+          Kipp_txt_scale = 1.0
+          Kipp_title = 'Kipp'
+
+          ! Set xaxis
+          Kipp_step_xmin = -1 ! Min model number to plot. Negative means start from the first model
+          Kipp_step_xmax = -1 ! Max model number to plot. Negative means use max model_number
+                               ! These can be combined with Kipp_{xmin,xmax} options
+          Kipp_max_width = -1 ! Maximum number of steps to show at once.
+                               ! Negative implies show all steps. This overrides `Kipp_step_xmin`
+
+          Kipp_xaxis_name = 'model_number' ! xaxis coordinates. Sensible choices
+                                          ! are `model_number` or `star_age`
+          Kipp_xaxis_log=.false. ! Whether xaxis should be reported as a log10 value
+          Kipp_xmin=-101 ! Min of x value to plot. -101d0 means use min(x)
+          Kipp_xmax=-101 ! Max of x value to plot. -101d0 means use max(x)
+          Kipp_xmargin=0.0
+          Kipp_xaxis_reversed=.false. ! Whether to reverse the direction of the xaxis
+          Kipp_xaxis_in_seconds=.false. ! Whether to plot time in seconds
+                                         ! Requires `Kipp_xaxis_name='star_age'`
+          Kipp_xaxis_in_Myr=.false. ! Whether to plot time in units of 10^6 years
+                                         ! Requires `Kipp_xaxis_name='star_age'`
+          Kipp_xaxis_time_from_present=.false. ! Whether to plot time since present.
+                                                ! plots `star_age-max(star_age)`
+                                                ! Requires `Kipp_xaxis_name='star_age'`
+
+
+          ! bounds for mass yaxis
+          Kipp_mass_max = -1 ! (Msun units) negative means use default
+          Kipp_mass_min = -1 ! (Msun units) negative means use default
+          Kipp_mass_margin = 0.01
+
+          ! bounds for luminosity yaxis
+          Kipp_lgL_max = -101 ! only used if /= -101d0; (L in Lsun units)
+          Kipp_lgL_min = -101 ! only used if /= -101d0; (L in Lsun units)
+          Kipp_lgL_margin = 0.1
+
+          Kipp_show_mixing = .true.
+             ! this uses the `mixing_regions` specified in your `history_columns.list`
+          Kipp_show_burn = .true.
+             ! this uses the `burning_regions` specified in your `history_columns.list`
+
+          Kipp_show_luminosities = .false.
+             ! to use this option, include the following in your `history_columns.list`
+             ! `log_L`, `log_Lneu`, `log_LH`, `log_LHe`
+          Kipp_show_mass_boundaries = .true.
+             ! to use this option, include the following in your `history_columns.list`
+             ! `he_core_mass`, `c_core_mass`, `o_core_mass`, `si_core_mass`, `fe_core_mass`
+
+          Kipp_mix_line_weight = 10
+          Kipp_mix_interval = 4
+             ! show mixing for steps with `mod(model_number, Kipp_mix_interval) = 0.`
+
+          Kipp_burn_line_weight = 14
+
+          Kipp_burn_type_cutoff = 0
+             ! show burn lines only for abs(log(eps)) > Kipp_burn_type_cutoff
+
+          Kipp_luminosities_line_weight = 8
+          Kipp_masses_line_weight = 8
+
+          show_Kipp_annotation1 = .false.
+          show_Kipp_annotation2 = .false.
+          show_Kipp_annotation3 = .false.
+
+          ! Enables calling a subroutine to add extra information to a plot
+          ! see `$MESA_DIR/star/other/pgstar_decorator.f90`
+          Kipp_use_decorator = .false.
+
+          ! file output
+          Kipp_file_flag = .false.
+          Kipp_file_dir = 'png'
+          Kipp_file_prefix = 'conv_'
+          Kipp_file_interval = 5 ! output when `mod(model_number,Kipp_file_interval)==0`
+          Kipp_file_width = -1 ! (inches) negative means use same value as for window
+          Kipp_file_aspect_ratio = -1 ! negative means use same value as for window
+
+
+
+
+/ ! end of pgstar namelist
